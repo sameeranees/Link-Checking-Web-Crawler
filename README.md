@@ -1,5 +1,5 @@
 # Link-Checking-Web-Crawler
-The Web Crawler checks links on the website recursively and then outputs the URLs that are broken, the Parent URLs and the Execption Errors in a CSV file.
+The Web Crawler checks links on the website recursively and then outputs the URLs that are broken, the Parent URLs and the Exception Errors in a CSV file.
 ## Installation
 The following libraries are needed:
 1. Requests (pip install requests)
