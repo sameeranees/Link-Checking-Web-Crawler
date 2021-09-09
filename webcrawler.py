@@ -7,10 +7,19 @@ from urllib.parse import urlparse
 from urllib.parse import urljoin
 import argparse
 import csv
+import multiprocessing
+import multiprocessing
+from joblib import Parallel, delayed
+from tqdm import tqdm
 
+
+num_cores = multiprocessing.cpu_count()
 searched=broken=[]
 def recursive_checker(url,link):
+    link=link.strip()
     upd_url = urljoin(url, link)
+    if (link.startswith("https") or link.startswith("http") or link.startswith("www")):
+        upd_url=link
     if not(upd_url in searched):
         if not("javascript" in upd_url or upd_url.startswith("mailto") or upd_url.endswith(".png") or upd_url.endswith(".jpg") or upd_url.endswith(".jpeg") or upd_url.endswith(".7z") or upd_url.endswith(".csv")):
             try:
@@ -26,8 +35,7 @@ def recursive_checker(url,link):
                     print("Not Broken Link:", upd_url, "in", url)
                     if urlparse(upd_url).netloc == urlparse(url).netloc:
                         links=getlinks(upd_url)
-                        for link in links:
-                            recursive_checker(upd_url,link)
+                        Parallel(n_jobs=num_cores)(delayed(recursive_checker)(upd_url,link) for link in links)
             except Exception as e:
                 print("Error:",str(e),upd_url)
                 with open('BrokenLinks.csv', 'a', newline='') as file:
