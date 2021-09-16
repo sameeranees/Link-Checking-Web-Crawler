@@ -4,6 +4,7 @@ The Web Crawler checks links on the website recursively and then outputs the URL
 The following libraries are needed:
 1. Requests (pip install requests)
 2. Beautiful Soap (pip install beautifulsoup4)
+3. Joblib (pip install joblib)
 ## Usage
 The file can be run by providing arguments: Url of website to check links, Name of File.
 ```
